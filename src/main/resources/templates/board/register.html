@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <h1>board register</h1>
+    <form th:action="@{/board/register}" th:method="post" enctype="multipart/form-data">
+        <div>
+<!--            <select>-->
+<!--                <option th:name="cat_cd">자유게시판</option>-->
+<!--                <option th:name="cat_cd">문의</option>-->
+<!--                <option th:name="cat_cd" value="신고">신고</option>-->
+<!--            </select>-->
+            <select th:name="select">
+                <option th:value='1'>자유게시판</option>
+                <option th:value='2'>신고</option>
+            </select>
+        </div>
+        <div>
+            <label>Title</label>
+            <input type="text" name="b_title" placeholder="Enter title">
+        </div>
+        <div>
+            <label>Content</label>
+            <textarea rows="5" name="b_content" placeholder="Enter content"></textarea>
+        </div>
+        <div>
+            <label>File</label>
+            <input type="file" name="r_file">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</html>

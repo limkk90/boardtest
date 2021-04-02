@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.boardtest.mapper.MainMapper">
+    <select id="getBoardList" resultType="org.zerock.boardtest.dto.boardDTO">
+        select * from (select row_number() over (order by B_DTT desc) ronum,
+                              cat_cd, b_dtt, b_title, b_content, u_id from board_tb)
+        where ronum between #{rowStart} and #{rowEnd}
+        order by B_DTT desc
+    </select>
+
+    <select id="getBoardListSearchTitle" resultType="org.zerock.boardtest.dto.boardDTO">
+        select * from (select row_number() over (order by B_DTT desc) ronum,
+                              cat_cd, b_dtt, b_title, b_content, u_id from board_tb where B_TITLE like '%' || #{keyWord} || '%')
+        where ronum between #{rowStart} and #{rowEnd}
+        order by B_DTT desc
+    </select>
+
+    <select id="getBoardListSearchWriter" resultType="org.zerock.boardtest.dto.boardDTO">
+        select * from (select row_number() over (order by B_DTT desc) ronum,
+                              cat_cd, b_dtt, b_title, b_content, u_id from board_tb where U_ID like '%' || #{keyWord} || '%')
+        where ronum between #{rowStart} and #{rowEnd}
+        order by B_DTT desc
+    </select>
+
+    <select id="getBoard" parameterType="String" resultType="org.zerock.boardtest.dto.boardDTO">
+        select * from BOARD_TB
+        where b_dtt = #{time}
+    </select>
+
+
+    <insert id="insertBoard">
+        insert into BOARD_TB(CAT_CD,B_DTT, B_TITLE, B_CONTENT, U_ID)
+        values(#{cat_cd}, systimestamp , #{b_title},  #{b_content}, 'lim')
+    </insert>
+
+    <select id="boardListCnt" resultType="int">
+        select count(*) from board_tb
+    </select>
+
+    <update id="updateBoard" parameterType="String">
+        update board_tb set b_title =#{title} ,b_content= #{content} where b_dtt = #{time}
+    </update>
+
+
+    <delete id="deleteBoard" parameterType="String">
+        delete from board_tb where b_dtt = #{time}
+    </delete>
+
+    <!--   댓글-->
+    <insert id="insertReply">
+        insert into REPLY_TB(R_DTT, R_CONTENT, R_WRITER, B_NO)
+        values(systimestamp, #{r_content}, #{r_writer}, #{b_no})
+    </insert>
+
+    <select id="getReplyList" parameterType="String" resultType="org.zerock.boardtest.dto.ReplyDTO">
+        select r_dtt, r_content, r_writer, b_no from reply_tb
+                                                         join board_tb on to_char(b_dtt, 'yymmddhh24miss') = b_no where b_no = #{bDate} order by r_dtt
+    </select>
+
+    <delete id="deleteReply" parameterType="String">
+        delete from reply_tb where r_dtt = #{bDate}
+    </delete>
+</mapper>

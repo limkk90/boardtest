@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block>
+    <h1>Modify Page</h1>
+    <form action="/board/modify" method="post">
+        <label>카테고리</label>
+        <input type="text" name="cat_cd" th:value="${dto?.cat_cd}" readonly>
+        <div>
+            <label>타이틀</label>
+            <input type="text" name="b_title" th:value="${dto?.b_title}">
+        </div>
+
+        <div>
+            <label>작성내용</label>
+            <input type="text" rows="5" name="b_content" th:value="${dto?.b_content}">
+        </div>
+
+        <div>
+            <label>작성자</label>
+            <input type="text" name="u_id" th:value="${dto?.u_id}" readonly>
+        </div>
+
+        <div>
+            <label>작성일</label>
+            <input type="text" th:value="${#temporals.format(dto?.b_dtt, 'yy/MM/dd HH:mm:ss.SSS')}" readonly>
+        </div>
+        <button type="submit" >Modify</button>
+        <button type="button">List</button>
+    </form>
+</th:block>

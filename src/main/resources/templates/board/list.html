@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .deletePoint{
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        li{
+            float: left;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form th:action="@{/board/list}" th:method="get">
+        <select th:name="ser">
+            <option th:value='T'>글제목</option>
+            <option th:value='W'>작성자</option>
+        </select>
+        <input type="text" th:name="keyWord">
+        <button type="submit">검색</button>
+    </form>
+</div>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>카테고리</th>
+                <th>등록일자</th>
+                <th>제목</th>
+                <th>유저아이디</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boardList}">
+            <th>[[${board.cat_cd}]]</th>
+            <th>[[${#temporals.format(board.b_dtt, 'yyyy/MM/dd')}]]</th>
+            <th>
+            <a th:href="@{/board/read(b_dtt = ${#temporals.format(board.b_dtt, 'yy/MM/dd HH:mm:ss.SSS')},
+            page=${pagination.page},
+            join=${#temporals.format(board.b_dtt, 'yyMMddHHmmss')})}">
+                [[${board.b_title}]]
+            </a>
+            </th>
+            <th>[[${board.u_id}]]</th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    <div>
+        <ul class="deletePoint">
+            <li>
+                <a th:href="@{?page=1}">
+                    <span>처음</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{?page={page} (page = ${pagination.prevBlock})}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <th:block th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+                <li th:with="start = ${pagination.startPage}, end=${pagination.endPage}"
+                    th:each="pageButton : ${#numbers.sequence(start, end)}">
+                    <a th:href="@{?page={page} (page=${pageButton})}" th:text="${pageButton}"></a>
+                </li>
+            </th:block>
+
+            <li>
+                <a th:href="@{?page={page} (page = ${pagination.nextBlock})}">
+                    <span>다음</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{?page={page} (page = ${pagination.totalPageCnt})}">
+                    <span>끝</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+<footer>
+    <span>
+        <a th:href="@{/board/register}">
+            <button type="button">등록</button>
+        </a>
+    </span>
+</footer>
+</body>
+</html>
