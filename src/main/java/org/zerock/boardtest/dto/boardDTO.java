@@ -12,7 +12,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -25,6 +27,4 @@ public class boardDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime b_dtt;
     private String u_id;
-    private String joinBnum;
-
 }

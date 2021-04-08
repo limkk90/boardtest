@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <form th:action="@{/replies/modify}" th:method="post">
+    <input type="text" placeholder="댓글 수정" name="r_content">
+        <button type="submit">수정</button>
+    </form>
+</th:block>

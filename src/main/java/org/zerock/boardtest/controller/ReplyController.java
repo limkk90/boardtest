@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.zerock.boardtest.dto.ReplyDTO;
+import org.zerock.boardtest.dto.boardDTO;
 import org.zerock.boardtest.service.Criteria;
 import org.zerock.boardtest.service.ReplyServiceImpl;
 
@@ -19,6 +20,8 @@ import java.awt.*;
 @Log4j2
 @RequestMapping("/replies")
 public class ReplyController {
+
+    String modiR_dtt;
     @Autowired
     ReplyServiceImpl replyServiceImpl;
     static String bDate;
@@ -44,4 +47,23 @@ public class ReplyController {
         replyServiceImpl.deleteReply(r_dtt);
         return "redirect:/board/read?b_dtt=" + b_dtt + "&page=" + page + "&join=" + join;
     }
+
+    @GetMapping("/modifyRepl")
+    public void read(String r_dtt){
+        modiR_dtt = r_dtt;
+        log.info("리플모디파이 겟 호출");
+        log.info("겟모디파이");
+        log.info("겟모디파이:"+ r_dtt);
+
+    }
+    @PostMapping("/modify")
+    public String modify(ReplyDTO replyDTO){
+        log.info("포스트리플라이 수정");
+        log.info("포스트리플라이 수정 기본키:"+ modiR_dtt);
+        log.info("포스트리플라이 수정 내용:" + replyDTO.getR_content());
+        replyServiceImpl.updateReply(replyDTO.getR_content(), modiR_dtt);
+        return null;
+    }
+
+
 }

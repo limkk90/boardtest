@@ -61,4 +61,8 @@
     <delete id="deleteReply" parameterType="String">
         delete from reply_tb where r_dtt = #{bDate}
     </delete>
+    
+    <update id="updateReply" parameterType="String">
+        update reply_tb set R_CONTENT=#{content} where R_DTT = #{r_dtt}
+    </update>
 </mapper>

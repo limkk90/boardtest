@@ -70,9 +70,9 @@
             page=${page?.page}, join=${reply?.b_no})}" th:method="post">
                 <button type="submit">삭제</button>
             </form>
-            <form th:action="@{/replies/modify/(r_dtt=${#temporals.format(reply?.r_dtt, 'yy/MM/dd HH:mm:ss.SSS')})}">
-                <button>수정</button>
-            </form>
+            <a th:href="@{/replies/modifyRepl/(r_dtt=${#temporals.format(reply?.r_dtt, 'yy/MM/dd HH:mm:ss.SSS')})}">
+                <button type="submit">수정</button>
+            </a>
         </div>
     </tr>
 

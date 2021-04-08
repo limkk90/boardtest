@@ -38,4 +38,9 @@ public class ReplyServiceImpl implements ReplyService {
         mainMapper.deleteReply(bDate);
     }
 
+    @Override
+    public void updateReply(String content, String r_dtt) {
+        mainMapper.updateReply(content, r_dtt);
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.zerock.boardtest.dto.ReplyDTO;
+import org.zerock.boardtest.dto.UploadResultDTO;
 import org.zerock.boardtest.dto.boardDTO;
 import org.zerock.boardtest.service.*;
 
@@ -32,6 +33,7 @@ public class HomeController {
     @GetMapping("/list")
     public String showMain(Criteria criteria, Model model,
                            @RequestParam(defaultValue = "1") int page){
+
         List<boardDTO> boardDto = null;
         log.info("서치키워드:"+ criteria.getKeyWord());
         log.info("서치카테고리:"+ criteria.getSer());
@@ -67,6 +69,7 @@ public class HomeController {
     public String register(boardDTO boardDTO, @RequestParam char select){
 //        log.info("레지스터셀렉트옵션:"+ select);
 //        log.info("레지스터DTO:"+boardDTO);
+
         boardDTO.setCat_cd(select);
         mainServiceImpl.register(boardDTO);
         return "redirect:/board/list";
@@ -94,7 +97,7 @@ public class HomeController {
 
     @PostMapping("/modify")
     public String modify(boardDTO boardDTO){
-//        log.info("게시글 수정:"+ modiB_dtt);
+        log.info("게시글 수정:"+ modiB_dtt);
 //        log.info("게시글 수정:"+ modiPage);
 //        log.info("게시글 수정:"+ modiJoin);
 //        log.info("게시글 수정:"+ boardDTO.getCat_cd());
@@ -112,4 +115,5 @@ public class HomeController {
         mainServiceImpl.delete(b_dtt);
         return "redirect:/board/list?page="+ page;
     }
+
 }
