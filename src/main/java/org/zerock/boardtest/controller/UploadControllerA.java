@@ -41,6 +41,8 @@ public class UploadControllerA {
 
     @PostMapping("/uploadAjax")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
+
+        log.info("업로드파일:"+ uploadFiles);
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
         for(MultipartFile uploadFile : uploadFiles){
             if(uploadFile.getContentType().startsWith("image") == false){
@@ -65,6 +67,10 @@ public class UploadControllerA {
             String saveName = uploadPath + File.separator + folderPath +
                     File.separator + uuid + "_" + fileName;
             log.info("saveName:" + saveName);
+            int pos = saveName.lastIndexOf(".");
+            String ext = saveName.substring(pos + 1);
+            log.info("EXT:"+ ext);
+            log.info("합친거:"+ uuid+"_"+fileName);
 
             Path savePath = Paths.get(saveName);
             try{
